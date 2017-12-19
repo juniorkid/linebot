@@ -12,29 +12,22 @@ const client = new Client({
 
 app.post('/webhook', (req, res) => {
   
-  if (req.body) {
-    if (req.body.events) {
-      var text = req.body.events[0].message.text
-      var sender = req.body.events[0].source.userId
-      var replyToken = req.body.events[0].replyToken
-
-      const message = {
-        type: 'text',
-        text: 'Hello World!'
-      };
-
-      console.log('reply token', replyToken)
-      
-      client.replyMessage(replyToken, message)
-        .then(() => {
-          res.sendStatus(200)
-        })
-        .catch((err) => {
-          res.sendStatus(400)
+  if (event.type === 'message') {
+    const message = event.message;
+  
+    if (message.type === 'text' && message.text === 'bye') {
+      if (event.source.type === 'room') {
+        client.leaveRoom(event.source.roomId);
+      } else if (event.source.type === 'group') {
+        client.leaveGroup(event.source.groupId);
+      } else {
+        client.replyMessage(event.replyToken, {
+          type: 'text',
+          text: 'I cannot leave a 1-on-1 chat!',
         });
+      }
     }
-  }
-  else {
+  } else {
     res.send('No user')
   }
 })

@@ -11,7 +11,8 @@ const client = new Client({
 // client.pushMessage(userId, { type: 'text', text: 'hello, world' })
 
 app.post('/webhook', (req, res) => {
-  
+  const event = req.body.events[0];
+
   if (event.type === 'message') {
     const message = event.message;
   

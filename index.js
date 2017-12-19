@@ -20,13 +20,15 @@ app.post('/webhook', (req, res) => {
     text: 'Hello World!'
   };
   
-  client.replyMessage(replyToken, message)
-    .then(() => {
-      res.sendStatus(200)
-    })
-    .catch((err) => {
-      res.sendStatus(400)
-    });
+  res.sendStatus(200)
+
+  // client.replyMessage(replyToken, message)
+  //   .then(() => {
+  //     res.sendStatus(200)
+  //   })
+  //   .catch((err) => {
+  //     res.sendStatus(400)
+  //   });
 })
 
 app.use(bodyParser.json())

@@ -11,22 +11,30 @@ const client = new Client({
 // client.pushMessage(userId, { type: 'text', text: 'hello, world' })
 
 app.post('/webhook', (req, res) => {
-  var text = req.body.events[0].message.text
-  var sender = req.body.events[0].source.userId
-  var replyToken = req.body.events[0].replyToken
-
-  const message = {
-    type: 'text',
-    text: 'Hello World!'
-  };
   
-  client.replyMessage(replyToken, message)
-    .then(() => {
-      res.sendStatus(200)
-    })
-    .catch((err) => {
-      res.sendStatus(400)
-    });
+  if (req.body) {
+    if (req.body.events) {
+      var text = req.body.events[0].message.text
+      var sender = req.body.events[0].source.userId
+      var replyToken = req.body.events[0].replyToken
+
+      const message = {
+        type: 'text',
+        text: 'Hello World!'
+      };
+      
+      client.replyMessage(replyToken, message)
+        .then(() => {
+          res.sendStatus(200)
+        })
+        .catch((err) => {
+          res.sendStatus(400)
+        });
+    }
+  }
+  else {
+    res.send('No user')
+  }
 })
 
 app.use(bodyParser.json())

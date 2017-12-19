@@ -24,30 +24,19 @@ app.post('/webhook', (req, res) => {
   
     if (event.type === 'message') {
       const message = event.message;
-    
-      console.log('message: ', message)
 
-      if (message.type === 'text' && message.text === 'bye') {
-        console.log('source: ', event.source)
-        if (event.source.type === 'room') {
-          client.leaveRoom(event.source.roomId);
-        } else if (event.source.type === 'group') {
-          client.leaveGroup(event.source.groupId);
-        } else {
-          console.log('replyToken: ', event.replyToken)
-          client.replyMessage(event.replyToken, {
-            type: 'text',
-            text: 'I cannot leave a 1-on-1 chat!',
-          })
-          .then((res) => {
-            console.log('success: ', res)
-            res.sendStatus(200)
-          })
-          .catch((e) => {
-            console.log('error: ', e)
-            res.sendStatus(400)
-          })
-        }
+      if (message.type === 'text' && message.text.indexOf('hello') > 0) {
+        client.replyMessage(event.replyToken, {
+          type: 'text',
+          text: 'สวัสดีสุดหล่อ อิอิ คิคิ',
+        })
+        .then(() => {
+          res.sendStatus(200)
+        })
+        .catch((e) => {
+          console.log('error: ', e)
+          res.sendStatus(400)
+        })
       }
     } else {
       res.send('No user')

@@ -17,8 +17,8 @@ app.use(bodyParser.json())
 
 app.post('/webhook', (req, res) => {
   
-    console.log('req: ', req)
-    console.log('body: ', req.body)
+    // console.log('req: ', req)
+    // console.log('body: ', req.body)
   
     const event = req.body.events[0];
   
@@ -34,7 +34,13 @@ app.post('/webhook', (req, res) => {
           client.replyMessage(event.replyToken, {
             type: 'text',
             text: 'I cannot leave a 1-on-1 chat!',
-          });
+          })
+          .then((res) => {
+            console.log('success: ', res)
+          })
+          .catch((e) => {
+            console.log('error: ', e)
+          })
         }
       }
     } else {

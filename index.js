@@ -9,40 +9,39 @@ const client = new Client({
 });
 
 // client.pushMessage(userId, { type: 'text', text: 'hello, world' })
-
-app.post('/webhook', (req, res) => {
-
-  console.log('req: ', req)
-  console.log('body: ', req.body)
-
-  const event = req.body.events[0];
-
-  if (event.type === 'message') {
-    const message = event.message;
-  
-    if (message.type === 'text' && message.text === 'bye') {
-      if (event.source.type === 'room') {
-        client.leaveRoom(event.source.roomId);
-      } else if (event.source.type === 'group') {
-        client.leaveGroup(event.source.groupId);
-      } else {
-        client.replyMessage(event.replyToken, {
-          type: 'text',
-          text: 'I cannot leave a 1-on-1 chat!',
-        });
-      }
-    }
-  } else {
-    res.send('No user')
-  }
-})
-
 app.use(bodyParser.json())
 
 app.set('port', (process.env.PORT || 4000))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
+app.post('/webhook', (req, res) => {
+  
+    console.log('req: ', req)
+    console.log('body: ', req.body)
+  
+    const event = req.body.events[0];
+  
+    if (event.type === 'message') {
+      const message = event.message;
+    
+      if (message.type === 'text' && message.text === 'bye') {
+        if (event.source.type === 'room') {
+          client.leaveRoom(event.source.roomId);
+        } else if (event.source.type === 'group') {
+          client.leaveGroup(event.source.groupId);
+        } else {
+          client.replyMessage(event.replyToken, {
+            type: 'text',
+            text: 'I cannot leave a 1-on-1 chat!',
+          });
+        }
+      }
+    } else {
+      res.send('No user')
+    }
+  })
+  
 
 app.get('/', function (req, res) {
 	res.send('Hello')

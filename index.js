@@ -28,6 +28,7 @@ app.post('/webhook', (req, res) => {
       console.log('message: ', message)
 
       if (message.type === 'text' && message.text === 'bye') {
+        console.log('source: ', event.source)
         if (event.source.type === 'room') {
           client.leaveRoom(event.source.roomId);
         } else if (event.source.type === 'group') {

@@ -22,6 +22,8 @@ app.post('/webhook', (req, res) => {
         type: 'text',
         text: 'Hello World!'
       };
+
+      console.log('reply token', replyToken)
       
       client.replyMessage(replyToken, message)
         .then(() => {

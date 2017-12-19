@@ -11,14 +11,14 @@ const client = new Client({
 // client.pushMessage(userId, { type: 'text', text: 'hello, world' })
 
 app.post('/webhook', (req, res) => {
-  var text = req.body.events[0].message.text
-  var sender = req.body.events[0].source.userId
-  var replyToken = req.body.events[0].replyToken
+  // var text = req.body.events[0].message.text
+  // var sender = req.body.events[0].source.userId
+  // var replyToken = req.body.events[0].replyToken
 
-  const message = {
-    type: 'text',
-    text: 'Hello World!'
-  };
+  // const message = {
+  //   type: 'text',
+  //   text: 'Hello World!'
+  // };
   
   res.sendStatus(200)
 

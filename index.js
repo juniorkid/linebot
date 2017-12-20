@@ -25,7 +25,7 @@ app.post('/webhook', (req, res) => {
     if (event.type === 'message') {
       const message = event.message;
 
-      if (message.type === 'text' && message.text.indexOf('hello') > 0) {
+      if (message.type === 'text' && message.text.indexOf('hello') > -1) {
         client.replyMessage(event.replyToken, {
           type: 'text',
           text: 'สวัสดีสุดหล่อ อิอิ คิคิ',
